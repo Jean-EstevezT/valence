@@ -1,0 +1,16 @@
+# Valence Periodic Table Explorer - Robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://valence-chemistry.vercel.app/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 10
+
+# Disallow
+Disallow: /private/
+Disallow: /admin/
+
+# Allow search engines to index all pages
+Allow: /*

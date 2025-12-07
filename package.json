@@ -1,0 +1,55 @@
+{
+  "name": "valence",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@react-three/drei": "^9.112.16",
+    "@react-three/fiber": "^8.15.24",
+    "lucide-react": "^0.344.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "recharts": "^2.10.4",
+    "three": "^0.162.0",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "description": "A modern, interactive 3D explorer for chemical elements.",
+  "keywords": [
+    "chemistry",
+    "periodic-table",
+    "3d",
+    "react",
+    "visualization",
+    "elements",
+    "science"
+  ],
+  "author": "Jean Estevez <https://github.com/Jean-EstevezT>",
+  "license": "MIT",
+  "devDependencies": {
+    "@craco/craco": "^7.1.0"
+  }
+}
