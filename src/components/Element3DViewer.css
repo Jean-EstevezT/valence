@@ -3,6 +3,10 @@
   border-radius: 12px;
   padding: 1.5rem;
   border: 1px solid #475569;
+  height: 100%;
+  /* Ensure full height */
+  display: flex;
+  flex-direction: column;
 }
 
 .viewer-header {

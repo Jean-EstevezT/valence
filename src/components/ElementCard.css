@@ -4,6 +4,10 @@
   overflow: hidden;
   border: 1px solid #475569;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  /* Ensure full height */
+  display: flex;
+  flex-direction: column;
 }
 
 .element-card:hover {
@@ -110,11 +114,11 @@
   .property-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .element-symbol-large {
     font-size: 2.5rem;
   }
-  
+
   .element-name-large {
     font-size: 1.2rem;
   }

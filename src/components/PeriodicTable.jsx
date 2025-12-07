@@ -84,8 +84,30 @@ const PeriodicTable = ({ elements, onElementSelect, selectedElement }) => {
       </div>
 
       <div className="f-block-container">
-        <div className="f-block">
-          {fBlockElements
+        <div className="f-block-label">Lanthanides</div>
+        <div className="f-block-row">
+          {elements
+            .filter(el => el.number >= 57 && el.number <= 71)
+            .sort((a, b) => a.number - b.number)
+            .map(element => (
+              <button
+                key={element.number}
+                className={`element-cell ${selectedElement?.number === element.number ? 'selected' : ''}`}
+                style={{ backgroundColor: getCategoryColor(element.category) }}
+                onClick={() => onElementSelect(element)}
+                onMouseEnter={() => setHoveredElement(element)}
+                onMouseLeave={() => setHoveredElement(null)}
+              >
+                <div className="element-number">{element.number}</div>
+                <div className="element-symbol">{element.symbol}</div>
+              </button>
+            ))}
+        </div>
+
+        <div className="f-block-label">Actinides</div>
+        <div className="f-block-row">
+          {elements
+            .filter(el => el.number >= 89 && el.number <= 103)
             .sort((a, b) => a.number - b.number)
             .map(element => (
               <button

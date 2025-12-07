@@ -56,13 +56,18 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .dashboard {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
   padding: 2rem;
   flex: 1;
@@ -77,16 +82,13 @@ body {
 }
 
 .visualization-panel {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 1.5rem;
+  width: 100%;
 }
 
-.visualizations {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
+/* .visualizations class removed as it is no longer used */
 
 .placeholder {
   display: flex;
@@ -118,11 +120,11 @@ body {
   .dashboard {
     grid-template-columns: 1fr;
   }
-  
+
   .periodic-table-container {
     order: 2;
   }
-  
+
   .visualization-panel {
     order: 1;
   }

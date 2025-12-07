@@ -3,6 +3,10 @@
   border-radius: 12px;
   padding: 1.5rem;
   border: 1px solid #475569;
+  height: 100%;
+  /* Ensure full height */
+  display: flex;
+  flex-direction: column;
 }
 
 .element-properties h3 {
@@ -13,7 +17,8 @@
 
 .property-cards {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  /* Responsive columns */
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
@@ -41,14 +46,20 @@
 
 .card-content {
   flex: 1;
+  min-width: 0;
+  /* Allow flex child to shrink */
 }
 
 .card-title {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
+  /* Slightly smaller to fit better */
   color: #94a3b8;
   margin-bottom: 0.25rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  word-break: break-word;
+  /* Prevent overflow */
+  hyphens: auto;
 }
 
 .card-value {
@@ -115,7 +126,7 @@
   .property-cards {
     grid-template-columns: 1fr;
   }
-  
+
   .info-grid {
     grid-template-columns: 1fr;
   }

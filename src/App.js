@@ -67,10 +67,8 @@ function App() {
               {selectedElement ? (
                 <>
                   <ElementCard element={selectedElement} />
-                  <div className="visualizations">
-                    <Element3DViewer element={selectedElement} />
-                    <ElementProperties element={selectedElement} />
-                  </div>
+                  <Element3DViewer element={selectedElement} />
+                  <ElementProperties element={selectedElement} />
                 </>
               ) : (
                 <div className="placeholder">

@@ -3,11 +3,12 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Sphere, Html } from '@react-three/drei';
 import './Element3DViewer.css';
 
-const Electron = ({ radius, speed, inclination = 0, color }) => {
+const Electron = ({ radius, speed, inclination = 0, color, isAnimating }) => {
   const ref = useRef();
   const time = useRef(0);
 
   useFrame((state, delta) => {
+    if (!isAnimating) return;
     time.current += delta * speed;
     const x = Math.cos(time.current) * radius;
     const z = Math.sin(time.current) * radius * Math.cos(inclination);
@@ -22,14 +23,14 @@ const Electron = ({ radius, speed, inclination = 0, color }) => {
   );
 };
 
-const Shell = ({ radius, color, electrons, shellNumber }) => {
+const Shell = ({ radius, color, electrons, shellNumber, isAnimating }) => {
   const electronsPerShell = [2, 8, 18, 32, 32, 18, 8]; // Max electrons per shell
-  
+
   const electronPositions = [];
   if (electrons > 0) {
     const maxElectrons = electronsPerShell[shellNumber - 1] || electrons;
     const actualElectrons = Math.min(electrons, maxElectrons);
-    
+
     for (let i = 0; i < actualElectrons; i++) {
       const angle = (i / actualElectrons) * Math.PI * 2;
       const inclination = Math.sin(i * 0.7) * 0.5; // Vary inclination for 3D effect
@@ -53,6 +54,7 @@ const Shell = ({ radius, color, electrons, shellNumber }) => {
           speed={pos.speed}
           inclination={pos.inclination}
           color={idx % 2 === 0 ? "#60a5fa" : "#a78bfa"}
+          isAnimating={isAnimating}
         />
       ))}
     </group>
@@ -68,7 +70,7 @@ const Nucleus = ({ protons, neutrons }) => {
     const radius = 0.3 * Math.cbrt(totalNucleons) * 0.3;
     const phi = Math.acos(-1 + (2 * i) / nucleonCount);
     const theta = Math.sqrt(nucleonCount * Math.PI) * phi;
-    
+
     nucleons.push({
       x: radius * Math.cos(theta) * Math.sin(phi),
       y: radius * Math.sin(theta) * Math.sin(phi),
@@ -81,7 +83,7 @@ const Nucleus = ({ protons, neutrons }) => {
     <group>
       {nucleons.map((nuc, idx) => (
         <Sphere key={idx} position={[nuc.x, nuc.y, nuc.z]} args={[0.1, 16, 16]}>
-          <meshStandardMaterial 
+          <meshStandardMaterial
             color={nuc.type === 'proton' ? '#ef4444' : '#3b82f6'}
             emissive={nuc.type === 'proton' ? '#ef4444' : '#3b82f6'}
             emissiveIntensity={0.2}
@@ -92,15 +94,15 @@ const Nucleus = ({ protons, neutrons }) => {
   );
 };
 
-const AtomModel = ({ element }) => {
+const AtomModel = ({ element, isAnimating }) => {
   const protons = element.number;
   const neutrons = Math.round(element.atomic_mass) - protons;
   const electrons = protons;
-  
+
   // Shell radii based on electron configuration
   const shells = [];
   let remainingElectrons = electrons;
-  
+
   for (let i = 1; i <= 7 && remainingElectrons > 0; i++) {
     const maxInShell = Math.min(2 * i * i, remainingElectrons);
     const electronsInShell = Math.min(maxInShell, remainingElectrons);
@@ -123,6 +125,7 @@ const AtomModel = ({ element }) => {
           color={shell.color}
           electrons={shell.electrons}
           shellNumber={shell.number}
+          isAnimating={isAnimating}
         />
       ))}
       <Html position={[0, -shells[shells.length - 1]?.radius * 1.5 || -3, 0]}>
@@ -146,20 +149,20 @@ const Element3DViewer = ({ element }) => {
     <div className="element-3d-viewer">
       <div className="viewer-header">
         <h3>3D Atomic Structure</h3>
-        <button 
+        <button
           className="control-button"
           onClick={() => setAutoRotate(!autoRotate)}
         >
           {autoRotate ? 'Pause Rotation' : 'Resume Rotation'}
         </button>
       </div>
-      
+
       <div className="canvas-container">
         <Canvas camera={{ position: [10, 5, 10], fov: 50 }}>
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={1} />
-          <AtomModel element={element} />
-          <OrbitControls 
+          <AtomModel element={element} isAnimating={autoRotate} />
+          <OrbitControls
             enablePan={true}
             enableZoom={true}
             enableRotate={true}
@@ -168,7 +171,7 @@ const Element3DViewer = ({ element }) => {
           />
         </Canvas>
       </div>
-      
+
       <div className="viewer-info">
         <p>Interactive 3D model showing electron shells and nucleus composition.</p>
         <div className="legend">
